@@ -11,5 +11,16 @@ RUN pip install --no-cache-dir --upgrade pip \
 
 COPY bot.py ./
 
+# Create data dir for persistence
+RUN mkdir -p /data
+VOLUME ["/data"]
+
+# Default envs
+ENV DATA_DIR=/data \
+    PORT=8080 \
+    HEALTHCHECK_PORT=8081
+
+EXPOSE 8080 8081
+
 # Expect TELEGRAM_BOT_TOKEN at runtime
 CMD ["python", "bot.py"]
